@@ -81,11 +81,11 @@ function ladeSpielDateien () {
         # . # . #
         `),
     images.createImage(`
-        . . # # #
-        # . # . #
+        # # . # #
+        . # # . #
+        . # # # .
         . # # # #
-        # # # . .
-        # # . # .
+        # . . . #
         `)
     ]
     SpielKarten = [

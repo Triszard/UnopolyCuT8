@@ -1,4 +1,4 @@
-<xml xmlns="https://developers.google.com/blockly/xml"><variables><variable id="9_etF+n$`)8fDrbr9E(T">SpielFiguren</variable><variable id="7}#q0R^0[16KM+#fa%2b">SpielKarten</variable><variable id="U!6E4KqSDkW6a`b.spmp">Punkte</variable><variable id="np(ZtX]8^ZVip|(.?6R0">AugenZahlWürfel</variable><variable id="sWDpyKvoXA:{kAk-h2fE">Zähler</variable></variables><block type="function_definition" id="45tbo{=u%U,}}rM3n#dM" collapsed="true" x="-385" y="-1009"><mutation name="ladeSpielDateien" functionid="UYSOPRxvWDNy0gxJfOCn"/><field name="function_name">ladeSpielDateien</field><statement name="STACK"><block type="variables_set" id="TV}|%,!|wZcR^JN2b;hT"><field name="VAR" id="9_etF+n$`)8fDrbr9E(T">SpielFiguren</field><value name="VALUE"><shadow type="math_number" id="Ix3zD5W=At]j1|lNjYh1"><field name="NUM">0</field></shadow><block type="lists_create_with" id="904#=le}VCA$f}9}$HVR" inline="false"><mutation items="12" horizontalafter="3"/><value name="ADD0"><block type="device_build_image" id=":|FPU4JTbKye(^Wd:t2~"><field name="LEDS">`
+<xml xmlns="https://developers.google.com/blockly/xml"><variables><variable id="9_etF+n$`)8fDrbr9E(T">SpielFiguren</variable><variable id="7}#q0R^0[16KM+#fa%2b">SpielKarten</variable><variable id="U!6E4KqSDkW6a`b.spmp">Punkte</variable><variable id="np(ZtX]8^ZVip|(.?6R0">AugenZahlWürfel</variable><variable id="sWDpyKvoXA:{kAk-h2fE">Zähler</variable></variables><block type="function_definition" id="45tbo{=u%U,}}rM3n#dM" x="-385" y="-1009"><mutation name="ladeSpielDateien" functionid="UYSOPRxvWDNy0gxJfOCn"/><field name="function_name">ladeSpielDateien</field><statement name="STACK"><block type="variables_set" id="TV}|%,!|wZcR^JN2b;hT"><field name="VAR" id="9_etF+n$`)8fDrbr9E(T">SpielFiguren</field><value name="VALUE"><shadow type="math_number" id="Ix3zD5W=At]j1|lNjYh1"><field name="NUM">0</field></shadow><block type="lists_create_with" id="904#=le}VCA$f}9}$HVR" inline="false"><mutation items="12" horizontalafter="3"/><value name="ADD0"><block type="device_build_image" id=":|FPU4JTbKye(^Wd:t2~"><field name="LEDS">`
         . . . . . 
         # # . # # 
         . . . . . 
@@ -65,11 +65,11 @@
         # # # # # 
         # . # . #
         `</field></block></value><value name="ADD11"><block type="device_build_image" id="Kq0uqv0x,Y8)YiP$Zdi("><field name="LEDS">`
-        . . # # # 
-        # . # . # 
+        # # . # # 
+        . # # . # 
+        . # # # . 
         . # # # # 
-        # # # . . 
-        # # . # .
+        # . . . #
         `</field></block></value></block></value><next><block type="variables_set" id="=`txWOk*dB,z(0fQ-f^B"><field name="VAR" id="7}#q0R^0[16KM+#fa%2b">SpielKarten</field><value name="VALUE"><shadow type="math_number" id="`OpKAk3hk6[O{_$!WWIe"><field name="NUM">0</field></shadow><block type="lists_create_with" id="HsGCJbMn(^f{$wyJbP8s" inline="false"><mutation items="18" horizontalafter="3"/><value name="ADD0"><block type="device_build_image" id="FNGNv=tPCO@i{wEUdZ6I"><field name="LEDS">`
         . # . . . 
         # # . . . 
