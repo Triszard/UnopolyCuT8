@@ -36,6 +36,35 @@ function wuerfelSytem () {
     AugenZahlWürfel = [randint(1, 6), randint(1, 6), randint(1, 6)]
     return AugenZahlWürfel[0] + (AugenZahlWürfel[1] + AugenZahlWürfel[2])
 }
+function EreignisKarteAusführen (Fall: number, SpielerComputer: number) {
+    if (Fall == 0) {
+        Temp = randint(1, 72)
+        KartenStärke[SpielerComputer] = Temp
+        basic.showString("Deine Kampfstärke beträgt nun:", 60)
+        basic.showNumber(Temp, 60)
+        Case = 0
+    } else if (Fall == 1) {
+        Temp = randint(-66, 6)
+        KartenStärke[SpielerComputer] = Temp
+        basic.showString("Deine Kampfstärke beträgt nun:", 60)
+        basic.showNumber(Temp, 60)
+        Case = 0
+    } else if (Fall == 2) {
+        Temp = randint(1, 200)
+        Punkte[SpielerComputer] = Temp
+        basic.showString("Deine Punkte wurden um:", 60)
+        basic.showNumber(Temp, 60)
+        basic.showString("erhöht! Würfel nochmal!", 60)
+        Case = 1
+    } else {
+        Temp = randint(-1, -200)
+        Punkte[SpielerComputer] = Temp
+        basic.showString("Deine Punkte wurden um:", 60)
+        basic.showNumber(Temp, 60)
+        basic.showString("vermindert! Würfel nochmal!", 60)
+        Case = 1
+    }
+}
 function ladeSpielDateien () {
     SpielFigurenSymbole = [
     images.createImage(`
@@ -253,6 +282,7 @@ function ladeSpielDateien () {
     ]
     Punkte = [0, 0]
     AktuellesSpielFeld = [0, 0]
+    KartenStärke = [0, 0]
 }
 // Spieler/Computer = 0 für Spieler und 1 für den Computer.
 function LoterieSystem (SpielerComputer: number) {
@@ -292,12 +322,40 @@ function SpielZug () {
     }
     AktuellesSpielFeld.shift()
     AktuellesSpielFeld.unshift(LoterieSystem(0))
+    KarteAuswerten(0)
+    if (Case == 0) {
+        SpielZug()
+    } else {
+    	
+    }
+}
+// Spieler/Computer = 0 für Spieler und 1 für den Computer.
+function KarteAuswerten (SpielerComputer: number) {
+    Temp = AktuellesSpielFeld[SpielerComputer]
+    if (Temp == 1 || (Temp == 2 || (Temp == 4 || (Temp == 5 || (Temp == 7 || (Temp == 8 || (Temp == 10 || (Temp == 11 || (Temp == 13 || (Temp == 14 || (Temp == 15 || Temp == 16))))))))))) {
+        if (SpielerComputer == 0) {
+            KartenStärke[0] = Temp
+        } else {
+            KartenStärke[1] = Temp
+        }
+        basic.showString("Dein Zug ist vorbei!")
+    } else if (Temp == 3 || Temp == 9) {
+        EreignisKarteAusführen(0, SpielerComputer)
+    } else if (Temp == 6 || Temp == 12) {
+        EreignisKarteAusführen(1, SpielerComputer)
+    } else if (Temp == 0) {
+        EreignisKarteAusführen(2, SpielerComputer)
+    } else {
+        EreignisKarteAusführen(3, SpielerComputer)
+    }
 }
 let GewürfelteZahl = 0
 let Temp3 = 0
 let AktuellesSpielFeld: number[] = []
-let Punkte: number[] = []
 let SpielKartenSymbole: Image[] = []
+let Punkte: number[] = []
+let Case = 0
+let KartenStärke: number[] = []
 let AugenZahlWürfel: number[] = []
 let SpielFigurenSymbole: Image[] = []
 let Temp2: Image[] = []
