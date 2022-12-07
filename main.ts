@@ -1,5 +1,5 @@
 function CharakterAuswahl (liste: any[]) {
-    Temp = MultiDimArrayReader(1, 1, liste)
+	
 }
 function ladeSpielDateien () {
     SpielFiguren = [
@@ -222,15 +222,9 @@ function wuerfelFunktion () {
     AugenZahlWürfel = [randint(1, 6), randint(1, 6), randint(1, 6)]
     basic.showNumber(AugenZahlWürfel[0] + (AugenZahlWürfel[1] + AugenZahlWürfel[2]))
 }
-function MultiDimArrayReader (num: number, num2: number, liste: any[]) {
-    Temp = liste[num]
-    Temp = Temp[num2]
-    return Temp
-}
 let AugenZahlWürfel: number[] = []
 let Punkte: number[] = []
 let SpielFiguren: Image[] = []
-let Temp: any = null
 let SpielKarten: Image[] = []
 ladeSpielDateien()
 CharakterAuswahl(SpielKarten)
