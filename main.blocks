@@ -65,11 +65,11 @@
         # # # # # 
         # . # . #
         `</field></block></value><value name="ADD11"><block type="device_build_image" id="Kq0uqv0x,Y8)YiP$Zdi("><field name="LEDS">`
+        . . # # # 
+        # . # . # 
         . # # # # 
-        . . # . # 
-        . . . . . 
-        . . . . . 
-        . . # . .
+        # # # . . 
+        # # . # .
         `</field></block></value></block></value><value name="ADD1"><block type="lists_create_with" id=")Iio.?cMBd6kQ;GZ4)}R" inline="false"><mutation items="6" horizontalafter="3"/><value name="ADD0"><block type="device_build_image" id="4)wZ]6XO2r9Crhd$_GUM"><field name="LEDS">`
         . # # # . 
         # # # # # 
