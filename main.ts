@@ -1,8 +1,6 @@
-let SpielFiguren: Image[][] = []
-let SpielKarten: Image[][] = []
-let Punkte: number[] = []
-let AugenZahlWürfel: number[] = []
-let Temp: any = null
+function CharakterAuswahl (liste: any[]) {
+    Temp = MultiDimArrayReader(1, 1, liste)
+}
 function ladeSpielDateien () {
     SpielFiguren = [[
     images.createImage(`
@@ -46,6 +44,48 @@ function ladeSpielDateien () {
         . . # . .
         # # . # #
         . . . . .
+        `),
+    images.createImage(`
+        . # # # .
+        # # # # #
+        . # # # .
+        . . . . .
+        . # # # .
+        `),
+    images.createImage(`
+        . # # # .
+        . # # # .
+        # # # # #
+        . . . . .
+        # # # # #
+        `),
+    images.createImage(`
+        # # # # #
+        # # . # #
+        . . # . .
+        . # # # .
+        . # # # .
+        `),
+    images.createImage(`
+        . # . # .
+        . # # # .
+        # # # # #
+        . # . # .
+        . # . # .
+        `),
+    images.createImage(`
+        . # # # .
+        # # # # #
+        # # # # #
+        # # # # #
+        # . # . #
+        `),
+    images.createImage(`
+        . # # # #
+        . . # . #
+        . . . . .
+        . . . . .
+        . . # . .
         `)
     ], [
     images.createImage(`
@@ -226,10 +266,16 @@ function wuerfelFunktion () {
 }
 function MultiDimArrayReader (num: number, num2: number, liste: any[]) {
     Temp = liste[num]
-    Temp = Temp[1]
+    Temp = Temp[num2]
     return Temp
 }
+let AugenZahlWürfel: number[] = []
+let Punkte: number[] = []
+let SpielFiguren: Image[][] = []
+let Temp: any = null
+let SpielKarten: Image[][] = []
+ladeSpielDateien()
+CharakterAuswahl(SpielKarten)
 basic.forever(function () {
-    ladeSpielDateien()
-    MultiDimArrayReader(1, 1, SpielFiguren).showImage(0)
+	
 })
