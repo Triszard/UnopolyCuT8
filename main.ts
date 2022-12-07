@@ -261,7 +261,11 @@ function LoterieSystem (SpielerComputer: number) {
     for (let index = 0; index < GewürfelteZahl; index++) {
         SpielKartenSymbole[Temp].scrollImage(1, Temp3)
         basic.clearScreen()
-        Temp += 1
+        if (Temp >= 18) {
+            Temp = 0
+        } else {
+            Temp += 1
+        }
         Temp3 += 5
     }
     SpielKartenSymbole[Temp].scrollImage(1, 120)
@@ -270,7 +274,7 @@ function LoterieSystem (SpielerComputer: number) {
     basic.showString("Deine Karte ist:", 60)
     SpielKartenSymbole[Temp].scrollImage(1, 120)
     basic.clearScreen()
-    return SpielKartenSymbole[Temp]
+    return Temp
 }
 function SpielZug () {
     basic.clearScreen()
@@ -286,7 +290,8 @@ function SpielZug () {
             break;
         }
     }
-    LoterieSystem(0)
+    AktuellesSpielFeld.shift()
+    AktuellesSpielFeld.unshift(LoterieSystem(0))
 }
 let GewürfelteZahl = 0
 let Temp3 = 0
