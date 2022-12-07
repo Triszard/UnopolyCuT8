@@ -88,7 +88,7 @@ function ladeSpielDateien () {
         # # . # .
         `)
     ]
-    SpielKarten = [[
+    SpielKarten = [
     images.createImage(`
         . # . . .
         # # . . .
@@ -172,8 +172,7 @@ function ladeSpielDateien () {
         . # . . . # . . . .
         . # . . # . . . . .
         . # . # # # . . . .
-        `)
-    ], [
+        `),
     images.createImage(`
         . # # # .
         # . . . #
@@ -201,20 +200,22 @@ function ladeSpielDateien () {
         . # # # .
         . . . . .
         . . # . .
-        `)
-    ], [images.createImage(`
+        `),
+    images.createImage(`
         . # # # .
         # # # # #
         . # . # .
         . # # # .
         . # # # .
-        `), images.createImage(`
+        `),
+    images.createImage(`
         # # . # #
         . # . # .
         . . # . .
         . # . # .
         # # . # #
-        `)]]
+        `)
+    ]
     Punkte = [0, 0]
 }
 function wuerfelFunktion () {
@@ -230,7 +231,7 @@ let AugenZahlWürfel: number[] = []
 let Punkte: number[] = []
 let SpielFiguren: Image[] = []
 let Temp: any = null
-let SpielKarten: Image[][] = []
+let SpielKarten: Image[] = []
 ladeSpielDateien()
 CharakterAuswahl(SpielKarten)
 basic.forever(function () {
