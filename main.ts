@@ -306,27 +306,43 @@ function LoterieSystem (SpielerComputer: number) {
     basic.clearScreen()
     return Temp
 }
-function SpielZug () {
-    basic.clearScreen()
-    Charaktere[0].scrollImage(1, 60)
-    basic.showString(" Du bist am Zug! A und B zum Wuerfeln!", 60)
-    basic.clearScreen()
-    while (true) {
-        if (input.buttonIsPressed(Button.AB)) {
+function SpielZug (ComputerSpieler: number) {
+    if (Case != -1) {
+        if (ComputerSpieler == 0) {
+            basic.clearScreen()
+            Charaktere[ComputerSpieler].scrollImage(1, 60)
+            basic.showString(" Du bist am Zug! A und B zum Wuerfeln!", 60)
+            basic.clearScreen()
+            while (true) {
+                if (input.buttonIsPressed(Button.AB)) {
+                    GewürfelteZahl = wuerfelSytem()
+                    basic.showString("Du hast die Zahl", 60)
+                    basic.showNumber(GewürfelteZahl, 60)
+                    basic.showString(" gewürfelt!", 60)
+                    break;
+                }
+            }
+        } else {
+            basic.clearScreen()
+            Charaktere[ComputerSpieler].scrollImage(1, 60)
+            basic.showString("Ist am Zug!", 60)
+            basic.clearScreen()
             GewürfelteZahl = wuerfelSytem()
-            basic.showString("Du hast die Zahl", 60)
+            basic.showString("Er hat die Zahl", 60)
             basic.showNumber(GewürfelteZahl, 60)
             basic.showString(" gewürfelt!", 60)
-            break;
         }
-    }
-    AktuellesSpielFeld.shift()
-    AktuellesSpielFeld.unshift(LoterieSystem(0))
-    KarteAuswerten(0)
-    if (Case == 0) {
-        SpielZug()
-    } else {
-    	
+        AktuellesSpielFeld.shift()
+        AktuellesSpielFeld.unshift(LoterieSystem(ComputerSpieler))
+        KarteAuswerten(ComputerSpieler)
+        if (Case == 0) {
+            SpielZug(1)
+        } else {
+            SpielZug(0)
+        }
+        if (Case == 1) {
+            Case = -1
+        }
     }
 }
 // Spieler/Computer = 0 für Spieler und 1 für den Computer.
@@ -335,10 +351,12 @@ function KarteAuswerten (SpielerComputer: number) {
     if (Temp == 1 || (Temp == 2 || (Temp == 4 || (Temp == 5 || (Temp == 7 || (Temp == 8 || (Temp == 10 || (Temp == 11 || (Temp == 13 || (Temp == 14 || (Temp == 15 || Temp == 16))))))))))) {
         if (SpielerComputer == 0) {
             KartenStärke[0] = Temp
+            basic.showString("Deine KartenStärke wurde festgelegt", 60)
         } else {
             KartenStärke[1] = Temp
+            basic.showString("Deine KartenStärke wurde festgelegt", 60)
         }
-        basic.showString("Dein Zug ist vorbei!")
+        basic.showString("Dein Zug ist vorbei!", 60)
     } else if (Temp == 3 || Temp == 9) {
         EreignisKarteAusführen(0, SpielerComputer)
     } else if (Temp == 6 || Temp == 12) {
@@ -364,4 +382,4 @@ let Charaktere: Image[] = []
 ladeSpielDateien()
 Charaktere = AuswahlSystem()
 basic.pause(1000)
-SpielZug()
+SpielZug(1)
