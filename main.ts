@@ -54,14 +54,17 @@ function EreignisKarteAusführen (Fall: number, SpielerComputer: number) {
         Punkte[SpielerComputer] = Temp
         basic.showString("Deine Punkte wurden um:", 60)
         basic.showNumber(Temp, 60)
-        basic.showString("erhöht! Würfel nochmal!", 60)
+        basic.showString("erhöht!", 60)
         Case = 1
     } else {
         Temp = randint(-1, -200)
         Punkte[SpielerComputer] = Temp
         basic.showString("Deine Punkte wurden um:", 60)
         basic.showNumber(Temp, 60)
-        basic.showString("vermindert! Würfel nochmal!", 60)
+        basic.showString("vermindert!", 60)
+        KartenStärke[SpielerComputer] = 18
+        basic.showString("Deine Kampfstärke beträgt nun:", 60)
+        basic.showNumber(KartenStärke, 60)
         Case = 1
     }
 }
@@ -283,67 +286,75 @@ function ladeSpielDateien () {
     Punkte = [0, 0]
     AktuellesSpielFeld = [0, 0]
     KartenStärke = [0, 0]
+    Case = 0
 }
 // Spieler/Computer = 0 für Spieler und 1 für den Computer.
 function LoterieSystem (SpielerComputer: number) {
-    Temp = AktuellesSpielFeld[SpielerComputer]
-    Temp3 = 40
-    for (let index = 0; index < GewürfelteZahl; index++) {
-        SpielKartenSymbole[Temp].scrollImage(1, Temp3)
-        basic.clearScreen()
-        if (Temp >= 18) {
-            Temp = 0
-        } else {
-            Temp += 1
-        }
-        Temp3 += 5
-    }
-    SpielKartenSymbole[Temp].scrollImage(1, 120)
-    basic.clearScreen()
-    basic.pause(200)
-    basic.showString("Deine Karte ist:", 60)
-    SpielKartenSymbole[Temp].scrollImage(1, 120)
-    basic.clearScreen()
-    return Temp
-}
-function SpielZug (ComputerSpieler: number) {
-    if (Case != -1) {
-        if (ComputerSpieler == 0) {
+    if (SpielerComputer == 0) {
+        Temp = AktuellesSpielFeld[0]
+        Temp3 = 40
+        for (let index = 0; index < GewürfelteZahl; index++) {
+            SpielKartenSymbole[Temp].scrollImage(1, Temp3)
             basic.clearScreen()
-            Charaktere[ComputerSpieler].scrollImage(1, 60)
-            basic.showString(" Du bist am Zug! A und B zum Wuerfeln!", 60)
-            basic.clearScreen()
-            while (true) {
-                if (input.buttonIsPressed(Button.AB)) {
-                    GewürfelteZahl = wuerfelSytem()
-                    basic.showString("Du hast die Zahl", 60)
-                    basic.showNumber(GewürfelteZahl, 60)
-                    basic.showString(" gewürfelt!", 60)
-                    break;
-                }
+            if (Temp >= 18) {
+                Temp = 0
+            } else {
+                Temp += 1
             }
-        } else {
-            basic.clearScreen()
-            Charaktere[ComputerSpieler].scrollImage(1, 60)
-            basic.showString("Ist am Zug!", 60)
-            basic.clearScreen()
-            GewürfelteZahl = wuerfelSytem()
-            basic.showString("Er hat die Zahl", 60)
-            basic.showNumber(GewürfelteZahl, 60)
-            basic.showString(" gewürfelt!", 60)
+            Temp3 += 5
         }
-        AktuellesSpielFeld.shift()
-        AktuellesSpielFeld.unshift(LoterieSystem(ComputerSpieler))
-        KarteAuswerten(ComputerSpieler)
-        if (Case == 0) {
-            SpielZug(1)
-        } else {
-            SpielZug(0)
+        SpielKartenSymbole[Temp].scrollImage(1, 120)
+        basic.clearScreen()
+        basic.pause(200)
+        basic.showString("Deine Karte ist:", 60)
+        SpielKartenSymbole[Temp].scrollImage(1, 120)
+        basic.clearScreen()
+        return Temp
+    } else {
+        Temp = AktuellesSpielFeld[1]
+        for (let index = 0; index < GewürfelteZahl; index++) {
+            if (Temp >= 18) {
+                Temp = 0
+            } else {
+                Temp += 1
+            }
         }
-        if (Case == 1) {
-            Case = -1
+        basic.showString("Seine Karte ist:", 60)
+        SpielKartenSymbole[Temp].scrollImage(1, 120)
+        basic.clearScreen()
+        return Temp
+    }
+}
+function SpielZug () {
+    if (Case == 0) {
+        basic.clearScreen()
+        Charaktere[0].scrollImage(1, 60)
+        basic.showString(" Du bist am Zug! A und B zum Wuerfeln!", 60)
+        basic.clearScreen()
+        while (true) {
+            if (input.buttonIsPressed(Button.AB)) {
+                GewürfelteZahl = wuerfelSytem()
+                basic.showString("Du hast die Zahl", 60)
+                basic.showNumber(GewürfelteZahl, 60)
+                basic.showString(" gewürfelt!", 60)
+                break;
+            }
         }
     }
+    AktuellesSpielFeld.shift()
+    AktuellesSpielFeld.unshift(LoterieSystem(0))
+    KarteAuswerten(0)
+    basic.clearScreen()
+    Charaktere[1].scrollImage(1, 60)
+    basic.showString("Ist am Zug!", 60)
+    basic.clearScreen()
+    GewürfelteZahl = wuerfelSytem()
+    basic.showString("Er hat die Zahl", 60)
+    basic.showNumber(GewürfelteZahl, 60)
+    basic.showString(" gewürfelt!", 60)
+    AktuellesSpielFeld.pop()
+    AktuellesSpielFeld.push(LoterieSystem(1))
+    KarteAuswerten(1)
 }
 // Spieler/Computer = 0 für Spieler und 1 für den Computer.
 function KarteAuswerten (SpielerComputer: number) {
@@ -382,4 +393,4 @@ let Charaktere: Image[] = []
 ladeSpielDateien()
 Charaktere = AuswahlSystem()
 basic.pause(1000)
-SpielZug(1)
+SpielZug()
