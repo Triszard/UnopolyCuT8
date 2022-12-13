@@ -1,7 +1,9 @@
 function AuswahlSystem () {
     Temp = 0
     Temp2 = []
-    basic.showString("Such dir einen Charakter aus!", 60)
+    if (TextAnAus == 0) {
+        basic.showString("Such dir einen Charakter aus!", 60)
+    }
     basic.clearScreen()
     while (true) {
         SpielFigurenSymbole[Temp].showImage(0, 75)
@@ -22,42 +24,51 @@ function AuswahlSystem () {
             break;
         }
     }
-    basic.clearScreen()
-    basic.showString("Dein Charakter ist: ", 60)
-    Temp2[0].showImage(0)
-    basic.clearScreen()
     Temp2.push(SpielFigurenSymbole[randint(6, 11)])
-    basic.showString("Der Computer Charakter ist: ", 60)
-    Temp2[1].showImage(0)
     basic.clearScreen()
+    if (TextAnAus == 0) {
+        basic.showString("Dein Charakter ist: ", 60)
+        Temp2[0].showImage(0)
+        basic.clearScreen()
+        basic.showString("Der Computer Charakter ist: ", 60)
+        Temp2[1].showImage(0)
+        basic.clearScreen()
+    }
     return Temp2
 }
 function wuerfelSytem () {
     AugenZahlWürfel = [randint(1, 6), randint(1, 6), randint(1, 6)]
     return AugenZahlWürfel[0] + (AugenZahlWürfel[1] + AugenZahlWürfel[2])
 }
+input.onPinTouchEvent(TouchPin.P1, input.buttonEventDown(), function () {
+    if (TextAnAus == 0) {
+        TextAnAus = 1
+    } else {
+        TextAnAus = 0
+    }
+})
 function KartenKampf () {
     if (Punkte[0] < Punkte[1]) {
         basic.showString("Du hast Punkte gegen den Computer verloren:", 60)
         Punkte[0] = Punkte[0] - 100
-        basic.showNumber(Punkte[0])
+        basic.showNumber(Punkte[0], 60)
         basic.showString("Der Computer hat Punkte gewonnen:", 60)
         Punkte[1] = Punkte[0] + 100
-        basic.showNumber(Punkte[1])
+        basic.showNumber(Punkte[1], 60)
     } else if (Punkte[0] > Punkte[1]) {
         basic.showString("Der Computer hat Punkte gegen den dich verloren:", 60)
         Punkte[1] = Punkte[0] - 100
-        basic.showNumber(Punkte[1])
+        basic.showNumber(Punkte[1], 60)
         basic.showString("Du hast Punkte gewonnen:", 60)
         Punkte[0] = Punkte[0] + 100
-        basic.showNumber(Punkte[0])
+        basic.showNumber(Punkte[0], 60)
     } else {
         basic.showString("Du hast einen Gleichstand mit dem Computer. Dein Punkte sind:", 60)
         Punkte[0] = Punkte[0] + 50
-        basic.showNumber(Punkte[0])
+        basic.showNumber(Punkte[0], 60)
         basic.showString("Dem Computer seine Punkte sind jetzt:", 60)
         Punkte[1] = Punkte[0] + 50
-        basic.showNumber(Punkte[1])
+        basic.showNumber(Punkte[1], 60)
     }
 }
 function EreignisKarteAusführen (Fall: number, SpielerComputer: number) {
@@ -343,6 +354,20 @@ function LoterieSystem (SpielerComputer: number) {
         return Temp
     }
 }
+input.onPinTouchEvent(TouchPin.P0, input.buttonEventDown(), function () {
+    if (TextAnAus == 0) {
+        TextAnAus = 1
+    } else {
+        TextAnAus = 0
+    }
+})
+input.onPinTouchEvent(TouchPin.P2, input.buttonEventDown(), function () {
+    if (TextAnAus == 0) {
+        TextAnAus = 1
+    } else {
+        TextAnAus = 0
+    }
+})
 function SpielZug () {
     basic.clearScreen()
     Charaktere[0].scrollImage(1, 60)
@@ -372,6 +397,13 @@ function SpielZug () {
     AktuellesSpielFeld.push(LoterieSystem(1))
     KarteAuswerten(1)
 }
+input.onPinTouchEvent(TouchPin.P3, input.buttonEventDown(), function () {
+    if (TextAnAus == 0) {
+        TextAnAus = 1
+    } else {
+        TextAnAus = 0
+    }
+})
 // Spieler/Computer = 0 für Spieler und 1 für den Computer.
 function KarteAuswerten (SpielerComputer: number) {
     Temp = AktuellesSpielFeld[SpielerComputer]
@@ -405,14 +437,16 @@ let Temp2: Image[] = []
 let Temp = 0
 let Punkte: number[] = []
 let Charaktere: Image[] = []
+let TextAnAus = 0
+TextAnAus = 0
 ladeSpielDateien()
 Charaktere = AuswahlSystem()
 basic.pause(1000)
-while (Punkte[0] >= 1000 || Punkte[1] >= 1000) {
+while (Punkte[0] <= 1000 || Punkte[1] <= 1000) {
     SpielZug()
     KartenKampf()
 }
-if (Punkte[0] >= 1000) {
+if (Punkte[0] <= 1000) {
     basic.showString("Glückwunsch du hast gewonnen! Drücke den Reset Button um das Spiel erneut zu starten ...", 60)
 } else {
     basic.showString("Der Computer hat das Spiel gewonnnen! Drücke den Reset Button um das Spiel erneut zu starten ...", 60)
