@@ -36,26 +36,47 @@ function wuerfelSytem () {
     AugenZahlWürfel = [randint(1, 6), randint(1, 6), randint(1, 6)]
     return AugenZahlWürfel[0] + (AugenZahlWürfel[1] + AugenZahlWürfel[2])
 }
+function KartenKampf () {
+    if (Punkte[0] < Punkte[1]) {
+        basic.showString("Du hast Punkte gegen den Computer verloren:", 60)
+        Punkte[0] = Punkte[0] - 100
+        basic.showNumber(Punkte[0])
+        basic.showString("Der Computer hat Punkte gewonnen:", 60)
+        Punkte[1] = Punkte[0] + 100
+        basic.showNumber(Punkte[1])
+    } else if (Punkte[0] > Punkte[1]) {
+        basic.showString("Der Computer hat Punkte gegen den dich verloren:", 60)
+        Punkte[1] = Punkte[0] - 100
+        basic.showNumber(Punkte[1])
+        basic.showString("Du hast Punkte gewonnen:", 60)
+        Punkte[0] = Punkte[0] + 100
+        basic.showNumber(Punkte[0])
+    } else {
+        basic.showString("Du hast einen Gleichstand mit dem Computer. Dein Punkte sind:", 60)
+        Punkte[0] = Punkte[0] + 50
+        basic.showNumber(Punkte[0])
+        basic.showString("Dem Computer seine Punkte sind jetzt:", 60)
+        Punkte[1] = Punkte[0] + 50
+        basic.showNumber(Punkte[1])
+    }
+}
 function EreignisKarteAusführen (Fall: number, SpielerComputer: number) {
     if (Fall == 0) {
         Temp = randint(1, 72)
         KartenStärke[SpielerComputer] = Temp
-        basic.showString("Deine Kampfstärke beträgt nun:", 60)
-        basic.showNumber(Temp, 60)
-        Case = 0
+        basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
     } else if (Fall == 1) {
         Temp = randint(-66, 6)
         KartenStärke[SpielerComputer] = Temp
-        basic.showString("Deine Kampfstärke beträgt nun:", 60)
-        basic.showNumber(Temp, 60)
-        Case = 0
+        basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
     } else if (Fall == 2) {
         Temp = randint(1, 200)
         Punkte[SpielerComputer] = Temp
         basic.showString("Deine Punkte wurden um:", 60)
         basic.showNumber(Temp, 60)
         basic.showString("erhöht!", 60)
-        Case = 1
+        KartenStärke[SpielerComputer] = 0
+        basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
     } else {
         Temp = randint(-1, -200)
         Punkte[SpielerComputer] = Temp
@@ -63,9 +84,7 @@ function EreignisKarteAusführen (Fall: number, SpielerComputer: number) {
         basic.showNumber(Temp, 60)
         basic.showString("vermindert!", 60)
         KartenStärke[SpielerComputer] = 18
-        basic.showString("Deine Kampfstärke beträgt nun:", 60)
-        basic.showNumber(KartenStärke, 60)
-        Case = 1
+        basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
     }
 }
 function ladeSpielDateien () {
@@ -286,7 +305,6 @@ function ladeSpielDateien () {
     Punkte = [0, 0]
     AktuellesSpielFeld = [0, 0]
     KartenStärke = [0, 0]
-    Case = 0
 }
 // Spieler/Computer = 0 für Spieler und 1 für den Computer.
 function LoterieSystem (SpielerComputer: number) {
@@ -326,19 +344,17 @@ function LoterieSystem (SpielerComputer: number) {
     }
 }
 function SpielZug () {
-    if (Case == 0) {
-        basic.clearScreen()
-        Charaktere[0].scrollImage(1, 60)
-        basic.showString(" Du bist am Zug! A und B zum Wuerfeln!", 60)
-        basic.clearScreen()
-        while (true) {
-            if (input.buttonIsPressed(Button.AB)) {
-                GewürfelteZahl = wuerfelSytem()
-                basic.showString("Du hast die Zahl", 60)
-                basic.showNumber(GewürfelteZahl, 60)
-                basic.showString(" gewürfelt!", 60)
-                break;
-            }
+    basic.clearScreen()
+    Charaktere[0].scrollImage(1, 60)
+    basic.showString(" Du bist am Zug! A und B zum Wuerfeln!", 60)
+    basic.clearScreen()
+    while (true) {
+        if (input.buttonIsPressed(Button.AB)) {
+            GewürfelteZahl = wuerfelSytem()
+            basic.showString("Du hast die Zahl", 60)
+            basic.showNumber(GewürfelteZahl, 60)
+            basic.showString(" gewürfelt!", 60)
+            break;
         }
     }
     AktuellesSpielFeld.shift()
@@ -382,15 +398,16 @@ let GewürfelteZahl = 0
 let Temp3 = 0
 let AktuellesSpielFeld: number[] = []
 let SpielKartenSymbole: Image[] = []
-let Punkte: number[] = []
-let Case = 0
 let KartenStärke: number[] = []
 let AugenZahlWürfel: number[] = []
 let SpielFigurenSymbole: Image[] = []
 let Temp2: Image[] = []
 let Temp = 0
+let Punkte: number[] = []
 let Charaktere: Image[] = []
 ladeSpielDateien()
 Charaktere = AuswahlSystem()
 basic.pause(1000)
-SpielZug()
+while (Punkte[0] >= 1000 || Punkte[1] >= 1000) {
+    SpielZug()
+}
