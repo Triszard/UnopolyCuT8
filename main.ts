@@ -410,4 +410,10 @@ Charaktere = AuswahlSystem()
 basic.pause(1000)
 while (Punkte[0] >= 1000 || Punkte[1] >= 1000) {
     SpielZug()
+    KartenKampf()
+}
+if (Punkte[0] >= 1000) {
+    basic.showString("Glückwunsch du hast gewonnen! Drücke den Reset Button um das Spiel erneut zu starten ...", 60)
+} else {
+    basic.showString("Der Computer hat das Spiel gewonnnen! Drücke den Reset Button um das Spiel erneut zu starten ...", 60)
 }
