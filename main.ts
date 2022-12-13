@@ -49,53 +49,67 @@ input.onPinTouchEvent(TouchPin.P1, input.buttonEventDown(), function () {
 })
 function KartenKampf () {
     if (Punkte[0] < Punkte[1]) {
-        basic.showString("Du hast Punkte gegen den Computer verloren:", 60)
-        Punkte[0] = Punkte[0] - 100
-        basic.showNumber(Punkte[0], 60)
-        basic.showString("Der Computer hat Punkte gewonnen:", 60)
         Punkte[1] = Punkte[0] + 100
-        basic.showNumber(Punkte[1], 60)
+        Punkte[0] = Punkte[0] - 100
+        if (TextAnAus == 0) {
+            basic.showString("Du hast Punkte gegen den Computer verloren:", 60)
+            basic.showNumber(Punkte[0], 60)
+            basic.showNumber(Punkte[1], 60)
+            basic.showString("Der Computer hat Punkte gewonnen:", 60)
+        }
     } else if (Punkte[0] > Punkte[1]) {
-        basic.showString("Der Computer hat Punkte gegen den dich verloren:", 60)
-        Punkte[1] = Punkte[0] - 100
-        basic.showNumber(Punkte[1], 60)
-        basic.showString("Du hast Punkte gewonnen:", 60)
         Punkte[0] = Punkte[0] + 100
-        basic.showNumber(Punkte[0], 60)
+        Punkte[1] = Punkte[0] - 100
+        if (TextAnAus == 0) {
+            basic.showString("Der Computer hat Punkte gegen den dich verloren:", 60)
+            basic.showNumber(Punkte[1], 60)
+            basic.showString("Du hast Punkte gewonnen:", 60)
+            basic.showNumber(Punkte[0], 60)
+        }
     } else {
-        basic.showString("Du hast einen Gleichstand mit dem Computer. Dein Punkte sind:", 60)
         Punkte[0] = Punkte[0] + 50
-        basic.showNumber(Punkte[0], 60)
-        basic.showString("Dem Computer seine Punkte sind jetzt:", 60)
         Punkte[1] = Punkte[0] + 50
-        basic.showNumber(Punkte[1], 60)
+        if (TextAnAus == 0) {
+            basic.showString("Du hast einen Gleichstand mit dem Computer. Dein Punkte sind:", 60)
+            basic.showNumber(Punkte[0], 60)
+            basic.showString("Dem Computer seine Punkte sind jetzt:", 60)
+            basic.showNumber(Punkte[1], 60)
+        }
     }
 }
 function EreignisKarteAusführen (Fall: number, SpielerComputer: number) {
     if (Fall == 0) {
         Temp = randint(1, 72)
         KartenStärke[SpielerComputer] = Temp
-        basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
+        if (TextAnAus == 0) {
+            basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
+        }
     } else if (Fall == 1) {
         Temp = randint(-66, 6)
         KartenStärke[SpielerComputer] = Temp
-        basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
+        if (TextAnAus == 0) {
+            basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
+        }
     } else if (Fall == 2) {
         Temp = randint(1, 200)
         Punkte[SpielerComputer] = Temp
-        basic.showString("Deine Punkte wurden um:", 60)
-        basic.showNumber(Temp, 60)
-        basic.showString("erhöht!", 60)
         KartenStärke[SpielerComputer] = 0
-        basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
+        if (TextAnAus == 0) {
+            basic.showString("Deine Punkte wurden um:", 60)
+            basic.showNumber(Temp, 60)
+            basic.showString("erhöht!", 60)
+            basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
+        }
     } else {
         Temp = randint(-1, -200)
         Punkte[SpielerComputer] = Temp
-        basic.showString("Deine Punkte wurden um:", 60)
-        basic.showNumber(Temp, 60)
-        basic.showString("vermindert!", 60)
         KartenStärke[SpielerComputer] = 18
-        basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
+        if (TextAnAus == 0) {
+            basic.showString("Deine Punkte wurden um:", 60)
+            basic.showNumber(Temp, 60)
+            basic.showString("vermindert!", 60)
+            basic.showString("Deine Kampfstärke wurde gesetzt!", 60)
+        }
     }
 }
 function ladeSpielDateien () {
@@ -376,9 +390,11 @@ function SpielZug () {
     while (true) {
         if (input.buttonIsPressed(Button.AB)) {
             GewürfelteZahl = wuerfelSytem()
-            basic.showString("Du hast die Zahl", 60)
-            basic.showNumber(GewürfelteZahl, 60)
-            basic.showString(" gewürfelt!", 60)
+            if (TextAnAus == 0) {
+                basic.showString("Du hast die Zahl", 60)
+                basic.showNumber(GewürfelteZahl, 60)
+                basic.showString(" gewürfelt!", 60)
+            }
             break;
         }
     }
@@ -386,13 +402,15 @@ function SpielZug () {
     AktuellesSpielFeld.unshift(LoterieSystem(0))
     KarteAuswerten(0)
     basic.clearScreen()
-    Charaktere[1].scrollImage(1, 60)
-    basic.showString("Ist am Zug!", 60)
-    basic.clearScreen()
     GewürfelteZahl = wuerfelSytem()
-    basic.showString("Er hat die Zahl", 60)
-    basic.showNumber(GewürfelteZahl, 60)
-    basic.showString(" gewürfelt!", 60)
+    if (TextAnAus == 0) {
+        Charaktere[1].scrollImage(1, 60)
+        basic.showString("Ist am Zug!", 60)
+        basic.clearScreen()
+        basic.showString("Er hat die Zahl", 60)
+        basic.showNumber(GewürfelteZahl, 60)
+        basic.showString(" gewürfelt!", 60)
+    }
     AktuellesSpielFeld.pop()
     AktuellesSpielFeld.push(LoterieSystem(1))
     KarteAuswerten(1)
@@ -410,10 +428,14 @@ function KarteAuswerten (SpielerComputer: number) {
     if (Temp == 1 || (Temp == 2 || (Temp == 4 || (Temp == 5 || (Temp == 7 || (Temp == 8 || (Temp == 10 || (Temp == 11 || (Temp == 13 || (Temp == 14 || (Temp == 15 || Temp == 16))))))))))) {
         if (SpielerComputer == 0) {
             KartenStärke[0] = Temp
-            basic.showString("Deine KartenStärke wurde festgelegt", 60)
+            if (TextAnAus == 0) {
+                basic.showString("Deine KartenStärke wurde festgelegt", 60)
+            }
         } else {
             KartenStärke[1] = Temp
-            basic.showString("Deine KartenStärke wurde festgelegt", 60)
+            if (TextAnAus == 0) {
+                basic.showString("Deine KartenStärke wurde festgelegt", 60)
+            }
         }
         basic.showString("Dein Zug ist vorbei!", 60)
     } else if (Temp == 3 || Temp == 9) {
